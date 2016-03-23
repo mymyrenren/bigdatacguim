@@ -52,7 +52,7 @@ kable(output, digits=2)
 ```{r pressure, echo=FALSE}
 NBA1415$Threepointshot<-NBA1415$ThreesMade/NBA1415$ThreesAttempted
 bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
-NBA1415bestThreeponit<-merge(NBA1415,bestThreeponit)
-output<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threeponitshot,decreasing = T),c("Team","Name","Threeponitshot")]
+NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
+output2<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threepointshot,decreasing = T),c("Team","Name","Threepointshot")]
 library(knitr)
 kable(output, digits=2)
