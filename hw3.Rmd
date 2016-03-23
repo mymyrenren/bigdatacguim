@@ -55,4 +55,5 @@ bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
 NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
 output2<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threepointshot,decreasing = T),c("Team","Name","Threepointshot")]
 library(knitr)
-kable(output, digits=2)
+kable(output2, digits=2)
+
