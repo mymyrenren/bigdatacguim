@@ -22,6 +22,7 @@ NBA1415MaxMinutes<-merge(NBA1415,MaxMinutes)
 output<-NBA1415MaxMinutes[order(NBA1415MaxMinutes$TotalMinutes,decreasing = T),c("Team","Name","TotalMinutesPlayed")]
 library(knitr)
 kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ##各隊得分王
@@ -34,6 +35,7 @@ NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
 output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
 library(knitr)
 kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
@@ -47,8 +49,11 @@ NBA1415Maxefficiency<-merge(NBA1415,Maxefficiency)
 output<-NBA1415Maxefficiency[order(NBA1415Maxefficiency$efficiency,decreasing = T),c("Team","Name","efficiency")]
 library(knitr)
 kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 ## 各隊三分球出手最準的球員
+計算依據為全季三分球出手最準的球員
+三分球出手最準的球員:(三分球命中率/三分球出手次數)
 ```{r pressure, echo=FALSE}
 NBA1415$Threepointshot<-NBA1415$ThreesMade/NBA1415$ThreesAttempted
 bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
@@ -56,4 +61,5 @@ NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
 output2<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threepointshot,decreasing = T),c("Team","Name","Threepointshot")]
 library(knitr)
 kable(output2, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 
