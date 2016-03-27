@@ -1,6 +1,6 @@
 ---
 title: "NBA 2014-2015球季 各隊分析"
-output: html_document
+output: github_document
 ---
 
 
@@ -17,7 +17,6 @@ NBA1415<-fetch_NBAPlayerStatistics("14-15")
 
 ```{r cars}
 MaxMinutes<-aggregate(TotalMinutesPlayed~Team,NBA1415,max)
-#tapply(NBA1415$TotalMinutesPlayed,NBA1415$Team,max)
 NBA1415MaxMinutes<-merge(NBA1415,MaxMinutes)
 output<-NBA1415MaxMinutes[order(NBA1415MaxMinutes$TotalMinutes,decreasing = T),c("Team","Name","TotalMinutesPlayed")]
 library(knitr)
@@ -30,7 +29,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r pressure, echo=FALSE}
 MaxPoint<-aggregate(TotalPoints~Team,NBA1415,max)
-#tapply(NBA1415$TotalPoints,NBA1415$Team,max)
 NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
 output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
 library(knitr)
