@@ -1,30 +1,68 @@
 ---
-title: "Untitled"
+title:"NBA 2014-2015球季 各隊分析"
 output: github_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+install.packages("SportsAnalytics")
+library(SportsAnalytics)
+NBA1415<-fetch_NBAPlayerStatistics("14-15")
 
-## GitHub Documents
+## 各隊最辛苦的球員
+計算依據為全季上場時間最多的球員
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
 
-## Including Code
-
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
+```
+MaxMinutes<-aggregate(TotalMinutesPlayed~Team,NBA1415,max)
+NBA1415MaxMinutes<-merge(NBA1415,MaxMinutes)
+output<-NBA1415MaxMinutes[order(NBA1415MaxMinutes$TotalMinutes,decreasing = T),c("Team","Name","TotalMinutesPlayed")]
+library(knitr)
+kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Including Plots
+##各隊得分王
+計算依據為全季總得分最多的球員
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```
+MaxPoint<-aggregate(TotalPoints~Team,NBA1415,max)
+NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
+output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
+library(knitr)
+kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## 各隊最有效率的球員
+計算依據為全季最有效率的球員
+最有效率的球員:(總得分/觸戰分鐘數)最高的球員
+```
+NBA1415$efficiency<-NBA1415$TotalPoints/NBA1415$TotalMinutesPlayed
+Maxefficiency<-aggregate(efficiency~Team,NBA1415,max)
+NBA1415Maxefficiency<-merge(NBA1415,Maxefficiency)
+output<-NBA1415Maxefficiency[order(NBA1415Maxefficiency$efficiency,decreasing = T),c("Team","Name","efficiency")]
+library(knitr)
+kable(output, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## 各隊三分球出手最準的球員
+計算依據為全季三分球出手最準的球員
+三分球出手最準的球員:(三分球命中率/三分球出手次數)
+```
+NBA1415$Threepointshot<-NBA1415$ThreesMade/NBA1415$ThreesAttempted
+bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
+NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
+output2<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threepointshot,decreasing = T),c("Team","Name","Threepointshot")]
+library(knitr)
+kable(output2, digits=2)
+knitr::opts_chunk$set(echo = TRUE)
+```
+

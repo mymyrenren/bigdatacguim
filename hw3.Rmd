@@ -2,16 +2,14 @@
 title: "NBA 2014-2015球季 各隊分析"
 output: github_document
 ---
-library(SportsAnalytics)
-NBA1415<-fetch_NBAPlayerStatistics("14-15")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+library(SportsAnalytics)
+NBA1415<-fetch_NBAPlayerStatistics("14-15")
 ## 各隊最辛苦的球員
 計算依據為全季上場時間最多的球員
-
 ```{r setup, include=FALSE}
 MaxMinutes<-aggregate(TotalMinutesPlayed~Team,NBA1415,max)
 NBA1415MaxMinutes<-merge(NBA1415,MaxMinutes)
@@ -23,7 +21,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ## 各隊得分王
 計算依據為全季總得分最多的球員
 
-```{r setup, include=FALSE}
+
+```{r cars}
 MaxPoint<-aggregate(TotalPoints~Team,NBA1415,max)
 NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
 output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
@@ -32,13 +31,12 @@ kable(output, digits=2)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 各隊最有效率的球員
+## Including Plots
+
+各隊最有效率的球員
 計算依據為全季最有效率的球員
 最有效率的球員:(總得分/觸戰分鐘數)
-
-You can also embed plots, for example:
-
-```{r setup, include=FALSE}
+```{r pressure, echo=FALSE}
 NBA1415$efficiency<-NBA1415$TotalPoints/NBA1415$TotalMinutesPlayed
 Maxefficiency<-aggregate(efficiency~Team,NBA1415,max)
 NBA1415Maxefficiency<-merge(NBA1415,Maxefficiency)
@@ -47,11 +45,10 @@ library(knitr)
 kable(output, digits=2)
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 ## 各隊三分球出手最準的球員
 計算依據為全季三分球出手最準的球員
 三分球出手最準的球員:(三分球命中率/三分球出手次數)
-```{r setup, include=FALSE}
+```{r pressure, echo=FALSE}
 NBA1415$Threepointshot<-NBA1415$ThreesMade/NBA1415$ThreesAttempted
 bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
 NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
