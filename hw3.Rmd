@@ -4,10 +4,11 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 library(SportsAnalytics)
 NBA1415<-fetch_NBAPlayerStatistics("14-15")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 ## 各隊最辛苦的球員
 計算依據為全季上場時間最多的球員
 ```{r setup, include=FALSE}
@@ -57,3 +58,4 @@ library(knitr)
 kable(output2, digits=2)
 knitr::opts_chunk$set(echo = TRUE)
 ```
+

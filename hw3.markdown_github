@@ -1,9 +1,7 @@
 NBA 2014-2015球季 各隊分析
 ================
 
-library(SportsAnalytics) NBA1415&lt;-fetch\_NBAPlayerStatistics("14-15")
-
-`{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)`
+`{r setup, include=FALSE} library(SportsAnalytics) NBA1415<-fetch_NBAPlayerStatistics("14-15") knitr::opts_chunk$set(echo = TRUE)`
 
 各隊最辛苦的球員
 ----------------

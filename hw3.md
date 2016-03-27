@@ -2,10 +2,11 @@
 title: "NBA 2014-2015球季 各隊分析"
 output: github_document
 ---
-library(SportsAnalytics)
-NBA1415<-fetch_NBAPlayerStatistics("14-15")
+
 
 ```{r setup, include=FALSE}
+library(SportsAnalytics)
+NBA1415<-fetch_NBAPlayerStatistics("14-15")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
