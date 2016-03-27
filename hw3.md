@@ -1,5 +1,5 @@
 ---
-title: "NBA 2014-2015球季 各隊分析"
+title:"NBA 2014-2015球季 各隊分析"
 output: github_document
 ---
 
@@ -15,7 +15,7 @@ NBA1415<-fetch_NBAPlayerStatistics("14-15")
 計算依據為全季上場時間最多的球員
 
 
-```{r cars}
+```
 MaxMinutes<-aggregate(TotalMinutesPlayed~Team,NBA1415,max)
 NBA1415MaxMinutes<-merge(NBA1415,MaxMinutes)
 output<-NBA1415MaxMinutes[order(NBA1415MaxMinutes$TotalMinutes,decreasing = T),c("Team","Name","TotalMinutesPlayed")]
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ##各隊得分王
 計算依據為全季總得分最多的球員
 
-```{r pressure, echo=FALSE}
+```
 MaxPoint<-aggregate(TotalPoints~Team,NBA1415,max)
 NBA1415MaxPoint<-merge(NBA1415,MaxPoint)
 output<-NBA1415MaxPoint[order(NBA1415MaxPoint$TotalPoints,decreasing = T),c("Team","Name","TotalPoints")]
@@ -37,10 +37,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+
 ## 各隊最有效率的球員
 計算依據為全季最有效率的球員
 最有效率的球員:(總得分/觸戰分鐘數)最高的球員
-```{r pressure, echo=FALSE}
+```
 NBA1415$efficiency<-NBA1415$TotalPoints/NBA1415$TotalMinutesPlayed
 Maxefficiency<-aggregate(efficiency~Team,NBA1415,max)
 NBA1415Maxefficiency<-merge(NBA1415,Maxefficiency)
@@ -49,10 +50,13 @@ library(knitr)
 kable(output, digits=2)
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+
 ## 各隊三分球出手最準的球員
 計算依據為全季三分球出手最準的球員
 三分球出手最準的球員:(三分球命中率/三分球出手次數)
-```{r pressure, echo=FALSE}
+```
 NBA1415$Threepointshot<-NBA1415$ThreesMade/NBA1415$ThreesAttempted
 bestThreeponit<-aggregate(Threepointshot~Team,NBA1415,max)
 NBA1415bestThreeponit<-merge(NBA1415bestThreeponit,bestThreeponit)
@@ -60,4 +64,6 @@ output2<-NBA1415bestThreeponit[order(NBA1415bestThreeponit$Threepointshot,decrea
 library(knitr)
 kable(output2, digits=2)
 knitr::opts_chunk$set(echo = TRUE)
+```
+
 
