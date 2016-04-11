@@ -1,0 +1,118 @@
+---
+title: "蔡英文的Facebook粉絲團分析"
+output: github_document
+---
+#2016/01/01至04/11貼文分析
+
+#讀取蔡英文粉絲團資料
+
+```{r }
+if (!require('Rfacebook')){
+    install.packages("Rfacebook")
+    library(Rfacebook)
+}
+token<-'CAACEdEose0cBAIIMb9kg9NeLhpP1z4NehHZCwRPnta9kOmXIdWYoft4eY0XxJcVFoExCHXBj65909dg5A5yaRM1lkZChDkRAMRpYrKKUeosR50bOF5VlBVWeWVIldZCgJdrW4KUJIMCbbKIp8wPEeHkzBcG0QbsoO1b1BWxqEtMjHl8ULnnSUt9R2fYPPalhcb2ccc4wgZDZD'
+totalPage<-NULL
+lastDate<-Sys.Date()
+DateVectorStr<-as.character(seq(as.Date("2016-01-01"),lastDate,by="5 days"))
+for(i in 1:(length(DateVectorStr)-1)){
+    tempPage<-getPage("tsaiingwen", token,
+                      since = DateVectorStr[i],until = DateVectorStr[i+1])
+    totalPage<-rbind(totalPage,tempPage)
+}
+nrow(totalPage)
+
+totalPage$datetime <- as.POSIXct(totalPage$created_time, 
+                                 format = "%Y-%m-%dT%H:%M:%S+0000", 
+                                 tz = "GMT")
+totalPage$dateTPE <- format(totalPage$datetime, "%Y-%m-%d", 
+                            tz = "Asia/Taipei")
+totalPage$weekdays <-weekdays(as.Date(totalPage$dateTPE))
+
+```
+#每日發文數分析
+
+```{r echo=TRUE}
+
+output<-aggregate(message~weekdays+dateTPE,totalPage,length)
+library(knitr)
+kable(output, digits=2)
+```
+
+2016/01/01~2016/04/11 
+
+
+除了01/17這天以外，每天都有發文，或許是希望被關注。
+
+01/14、01/15這兩天的發文數特別高，可能是接近選舉。
+
+當選後與當選前的發文數量也差很多，選舉前，一天平均5篇左右的發文而當選後一天至多2篇，但依然維持每天發文。
+
+
+#每日likes數
+
+```{r echo=TRUE}
+output1<-aggregate(likes_count~dateTPE,totalPage,mean)
+library(knitr)
+kable(output1, digits=2)
+```
+
+
+
+01/10 讚數自01/01日起最高，或許是因為故鄉文帶動讚數。
+
+01/14、01/15 發文數特別高，連帶讚數也升高。
+
+01/16、01/17 總統當選帶動兩天讚數來到20多萬。
+
+01/22 PO出與副總統當選人的當選證書合影。
+
+02/08 台南大地震祈福感謝文。讚數10萬。
+
+02/11 台南大地震祈福文。讚數11萬。
+
+03/12 分享反核大遊行，但是反應不熱烈，讚數只有7000多。
+
+03/29 為小燈泡祈福文，讚數18萬。
+
+
+#每日comments數
+
+```{r echo=TRUE}
+output2<-aggregate(comments_count~dateTPE,totalPage,mean)
+library(knitr)
+kable(output2, digits=2)
+```
+
+
+01/04 留言首度破千，黨派形象文，或許帶動正反雙方留言。
+
+01/17 留言1萬多則，大多祝賀當選，但也有其他支持者的聲音。
+
+01/20 留言近3萬則，文章多為簡體字，或許是那時中國大陸的防火牆失靈所造成。
+
+03/19 出席車子的活動，與嚴凱泰互動很少，留言數也是01/01~04/11最低的。
+
+
+
+#每日shares數
+
+```{r echo=TRUE}
+output3<-aggregate(shares_count~dateTPE,totalPage,mean)
+library(knitr)
+kable(output3, digits=2)
+```
+
+
+01/16 分享數4000多，可能是分享當選的喜悅。
+
+01/17、01/18 分享數也不少，或許是當選後的狂熱潮。
+
+01/20~01/22 感謝當選與當選證書的照片文帶動分享。
+
+02/07 台南大地震，祈福感謝加油的文章帶動分享。
+
+03/29 為小燈泡祈福。分享數6000多，比當選時還多。
+
+04/05 分享數創新低，僅1則，蠢羊與奇怪生物的相片，或許是無       法帶動讀者的興趣吧。
+
